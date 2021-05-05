@@ -4,7 +4,7 @@ from movimentos_possiveis import lista_movimentos_possiveis as lmp
 
 def possui_movimentos_possiveis(baralho):
     total_movimentos = []
-    for i in range(0, len(baralho)-1):
+    for i in range(0, len(baralho)):
         total_movimentos += lmp(baralho, i)
     if total_movimentos == []:
         return False
