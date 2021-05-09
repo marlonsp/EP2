@@ -3,7 +3,10 @@ def valida_inteiro(string):
     for letra in string:
         if letra not in v:
             return False
-    return True
+    if string == '':
+        return False
+    else:
+        return True
 
 def valida_faixa(a, b, string):
     if not valida_inteiro(string):

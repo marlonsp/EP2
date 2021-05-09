@@ -9,6 +9,8 @@ from empilha_carta import empilha
 from validacao import valida_inteiro
 from validacao import valida_faixa
 
+from colorir import colorir_cartas
+
 #inicio do jogo
 print('Paciencia Acordeão')
 print('=-='*8)
@@ -22,6 +24,7 @@ while Jogar == '':
     print('Estado atual do baralho: ')
     n = 1
     for i in baralho:
+        i = colorir_cartas(i)
         print('{0}- {1}'.format(n, i))
         n += 1
     #Verifica se existem jogadas possíveis
@@ -31,21 +34,34 @@ while Jogar == '':
         print('')
         movimento = input('Escolha o número de uma carta para movê-la (Entre 1 e {}): '.format(len(baralho)))
         # Verifica se a entrada para o movimento é válida
-        while valida_faixa(1, len(baralho), movimento) == False:  
+        verificar = False
+        while verificar == False:
+            if valida_faixa(1, len(baralho), movimento) == True:
+                movimento = int(movimento)
+                if len(lista_movimentos_possiveis(baralho, movimento-1)) == 0:
+                    verificar = False
+                    movimento = input('Essa carta não possui movimentos , escolha outro: ')            
+                else:
+                    verificar = True
+            elif movimento == '':
+                verificar = False
                 movimento = input('Isso não é um número válido , escolha outro: ')
-        #empilha carta com apenas 1 opção de movimento
+            else:
+                verificar = False
+                movimento = input('Isso não é um número válido , escolha outro: ')
         movimento = int(movimento)
+        #empilha carta com apenas 1 opção de movimento
         if len(lista_movimentos_possiveis(baralho, movimento-1)) == 1:
             if lista_movimentos_possiveis(baralho, movimento-1)[0] == 1:
                 baralho = empilha(baralho, movimento-1, movimento-2)
             else:
                 baralho = empilha(baralho, movimento-1, movimento-4)
         #Escolha e empilha carta com 2 opções de movimento
-        else:
+        if len(lista_movimentos_possiveis(baralho, movimento-1)) == 2:
             print('')
             print('Essa carta possui duas opções de movimentos: ')
-            print('1- {}'.format(baralho[movimento-4]))
-            print('2- {}'.format(baralho[movimento-2]))
+            print('1- {}'.format(colorir_cartas(baralho[movimento-4])))
+            print('2- {}'.format(colorir_cartas(baralho[movimento-2])))
             escolha_de_movimento = input('Qual sua escolha? (1 ou 2): ')
             #valida a escolha de movimento
             while escolha_de_movimento != '1' and escolha_de_movimento != '2':
@@ -59,6 +75,7 @@ while Jogar == '':
         n = 1
         print('Estado atual do baralho: ')
         for i in baralho:
+            i = colorir_cartas(i)
             print('{0}- {1}'.format(n, i))
             n += 1
         #Verifica se existem jogadas possíveis
