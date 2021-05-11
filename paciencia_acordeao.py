@@ -12,7 +12,10 @@ from validacao import valida_faixa
 from colorir import colorir_cartas
 
 #inicio do jogo
-print('Paciencia Acordeão')
+print('=-='*8)
+Dstart = '\33[35m'
+Dend = '\33[0m'
+print(Dstart+ 'Paciencia Acordeão' + Dend)
 print('=-='*8)
 
 Jogar = str(input('Aperte Enter para iniciar o jogo: '))  # start do jogo
@@ -57,7 +60,7 @@ while Jogar == '':
             else:
                 baralho = empilha(baralho, movimento-1, movimento-4)
         #Escolha e empilha carta com 2 opções de movimento
-        if len(lista_movimentos_possiveis(baralho, movimento-1)) == 2:
+        elif len(lista_movimentos_possiveis(baralho, movimento-1)) == 2:
             print('')
             print('Essa carta possui duas opções de movimentos: ')
             print('1- {}'.format(colorir_cartas(baralho[movimento-4])))
@@ -83,9 +86,14 @@ while Jogar == '':
     print('')
     #Print do resultado do jo
     if len(baralho) == 1:
-        print('Fim de jogo: Você venceu!')
+        Dwin = '\33[92m'
+        Dend = '\33[0m'
+        print(Dwin + 'Fim de jogo: Você venceu, Parabéns!' + Dend)
     else:
-        print('Fim de jogo: Você perdeu')
+        print('Não existem mais jogadas possíveis...')
+        Dlose = '\33[91m'
+        Dend = '\33[0m'
+        print(Dlose + 'Fim de jogo: Você perdeu' + Dend)
     #Restart do jogo
     quer_novamente = str(input('Deseja jogar novamente? (S/N) '))
     #Valida a escolha
